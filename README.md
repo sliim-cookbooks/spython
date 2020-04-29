@@ -2,7 +2,7 @@ Spython cookbook - Sliim's python cookbook
 ==========================================
 
 Simple cookbook to manage python installations.  
-[![Cookbook Version](https://img.shields.io/cookbook/v/spython.svg)](https://community.opscode.com/cookbooks/spython) [![Build Status](https://travis-ci.org/sliim-cookbooks/spython.svg?branch=master)](https://travis-ci.org/sliim-cookbooks/spython) 
+[![Cookbook Version](https://img.shields.io/cookbook/v/spython.svg)](https://supermarket.chef.io/cookbooks/spython) [![Build Status](https://travis-ci.org/sliim-cookbooks/spython.svg?branch=master)](https://travis-ci.org/sliim-cookbooks/spython) 
 
 Requirements
 ------------
