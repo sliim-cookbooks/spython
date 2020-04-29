@@ -1,0 +1,60 @@
+---
+driver:
+  name: docker
+  binary: docker
+  use_sudo: false
+
+provisioner:
+  name: chef_zero
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: debian-9
+  - name: debian-10
+  - name: debian-bullseye
+  - name: ubuntu-18.04
+
+suites:
+  - name: python2
+    excludes:
+      - debian-bullseye
+      - ubuntu-18.04
+    run_list:
+      - recipe[apt]
+      - recipe[spython::2]
+    attributes:
+      spython:
+        "2":
+          pip_packages:
+            paramiko: null
+            PyYAML: 3.13
+    verifier:
+      inspec_tests:
+        - path: test/integration/default
+      inputs:
+        runtime: "2"
+        pip_bin: pip2
+        packages:
+          paramiko: null
+          PyYAML: 3.13
+  - name: python3
+    run_list:
+      - recipe[apt]
+      - recipe[spython::3]
+    attributes:
+      spython:
+        "3":
+          pip_packages:
+            paramiko: null
+            PyYAML: 3.13
+    verifier:
+      inspec_tests:
+        - path: test/integration/default
+      inputs:
+        runtime: "3"
+        pip_bin: pip3
+        packages:
+          paramiko: null
+          PyYAML: 3.13
