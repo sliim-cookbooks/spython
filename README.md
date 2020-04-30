@@ -11,6 +11,7 @@ The following platforms and versions are tested and supported using Opscode's te
 - Debian 9
 - Debian 10
 - Debian bullseye
+- Ubuntu 16.04
 - Ubuntu 18.04
 
 Attributes

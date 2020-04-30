@@ -7,7 +7,7 @@ chef_version '>= 12'
 version '0.1.0'
 
 supports 'debian', '>= 9.0'
-supports 'ubuntu', '>= 18.04'
+supports 'ubuntu', '>= 16.04'
 
 source_url 'https://github.com/sliim-cookbooks/spython'
 issues_url 'https://github.com/sliim-cookbooks/spython/issues'

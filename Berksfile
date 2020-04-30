@@ -3,4 +3,7 @@ metadata
 
 group :integration do
   cookbook 'apt'
+  cookbook 'locales',
+           git: 'https://github.com/sliim-cookbooks/locales',
+           ref: 'create-directory'
 end

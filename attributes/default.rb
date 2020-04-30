@@ -26,6 +26,7 @@ default['spython']['2']['packages'] = value_for_platform(
   'centos' => { 'default' => %w(python python-devel python-pip) },
   'fedora' => { 'default' => %w(python python-devel python-pip) },
   'suse' => { 'default' => %w(python python-devel python-pip) },
+  'ubuntu' => { '<= 16.04' => %w(python python-dev python-pip) },
   'default' => %w(python2 python2-dev python2-pip)
 )
 
