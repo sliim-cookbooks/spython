@@ -8,6 +8,7 @@ version '0.1.0'
 
 supports 'debian', '>= 9.0'
 supports 'ubuntu', '>= 16.04'
+supports 'centos', '>= 7'
 
 source_url 'https://github.com/sliim-cookbooks/spython'
 issues_url 'https://github.com/sliim-cookbooks/spython/issues'

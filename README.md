@@ -13,6 +13,7 @@ The following platforms and versions are tested and supported using Opscode's te
 - Debian bullseye
 - Ubuntu 16.04
 - Ubuntu 18.04
+- Centos 7
 
 Attributes
 ----------

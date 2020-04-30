@@ -13,10 +13,17 @@ verifier:
 
 platforms:
   - name: debian-9
+    run_list:
+      - recipe[apt]
   - name: debian-10
+    run_list:
+      - recipe[apt]
   - name: debian-bullseye
+    run_list:
+      - recipe[apt]
   - name: ubuntu-16.04
     run_list:
+      - recipe[apt]
       - recipe[locales]
     attributes:
       spython:
@@ -24,6 +31,11 @@ platforms:
           pip_upgrade: true
           setuptools_upgrade: true
   - name: ubuntu-18.04
+    run_list:
+      - recipe[apt]
+  - name: centos-7
+    run_list:
+      - recipe[yum-epel]
 
 suites:
   - name: python2
@@ -31,7 +43,6 @@ suites:
       - debian-bullseye
       - ubuntu-18.04
     run_list:
-      - recipe[apt]
       - recipe[spython::2]
     attributes:
       spython:
@@ -50,7 +61,6 @@ suites:
           PyYAML: 3.13
   - name: python3
     run_list:
-      - recipe[apt]
       - recipe[spython::3]
     attributes:
       spython:
