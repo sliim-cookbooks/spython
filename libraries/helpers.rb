@@ -28,3 +28,9 @@ def spython_install(python)
     end
   end
 end
+
+def spython_venv_command(name, resource, bin='python')
+  venv = find_resource!(:spython_venv, name)
+  raise "The virtualenv #{venv.name} has been created with python #{venv.runtime}. The new resource use python #{resource.runtime}" unless venv.runtime == resource.runtime
+  "source #{venv.path}/bin/activate && #{bin}"
+end

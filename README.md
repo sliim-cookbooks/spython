@@ -79,7 +79,33 @@ spython_package 'PyYaml' do
 end
 ```
 
-See resources files for more infos.
+#### spython_venv
+Create python virtualenv
+```
+spython_venv '/path/to/my/venv' do
+  runtime '3'
+end
+```
+
+#### spython_exec
+Execute python command
+```
+spython_exec 'setup.py install' do
+  runtime '3'
+  cwd '/path/to/my/project'
+end
+```
+
+#### spython_pip
+Execute pip command
+```
+spython_pip 'install -r requirements.txt' do
+  runtime '3'
+  cwd '/path/to/my/project'
+end
+```
+
+See resources files for more infos about resources properties.
 
 Testing
 -------
