@@ -24,18 +24,33 @@ property :version, String, default: ''
 action :install do
   py = spython_attributes(new_resource.runtime)
 
-  ruby_block "get-#{new_resource.name}-version" do
-    block do
-      node.run_state["#{new_resource.name}_version"] = shell_out("#{py['pip_bin']} freeze|grep '^#{new_resource.name}='").stdout.chomp.split('=').last
-    end
-  end
-
-  install_cmd = "#{py['pip_bin']} install #{new_resource.name}"
+  install_cmd = "#{node['pip'][new_resource.runtime.to_s]['bin']} install #{new_resource.name}"
   unless new_resource.version.empty?
     install_cmd << "==#{new_resource.version}"
   end
 
   execute install_cmd do
-    not_if { (new_resource.version.empty? && node.run_state["#{new_resource.name}_version"]) || (!new_resource.version.empty? && new_resource.version == node.run_state["#{new_resource.name}_version"]) }
+    not_if { (new_resource.version.empty? && node['pip'][new_resource.runtime.to_s]['packages'][new_resource.name]) || (!new_resource.version.empty? && node['pip'][new_resource.runtime.to_s]['packages'].key?(new_resource.name) && new_resource.version == node['pip'][new_resource.runtime.to_s]['packages'][new_resource.name]['version']) }
+  end
+end
+
+action :upgrade do
+  py = spython_attributes(new_resource.runtime)
+
+  install_cmd = "#{node['pip'][new_resource.runtime.to_s]['bin']} install --upgrade #{new_resource.name}"
+  unless new_resource.version.empty?
+    install_cmd << "==#{new_resource.version}"
+  end
+
+  execute install_cmd do
+    not_if { (!new_resource.version.empty? && node['pip'][new_resource.runtime.to_s]['packages'].key?(new_resource.name) && new_resource.version == node['pip'][new_resource.runtime.to_s]['packages'][new_resource.name]['version']) }
+  end
+end
+
+action :remove do
+  py = spython_attributes(new_resource.runtime)
+
+  execute "#{node['pip'][new_resource.runtime.to_s]['bin']} uninstall #{new_resource.name}" do
+    only_if { node['pip'][new_resource.runtime.to_s]['packages'].key?(new_resource.name) }
   end
 end

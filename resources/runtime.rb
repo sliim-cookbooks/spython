@@ -30,14 +30,14 @@ action :install do
 
   execute "spython[#{version}]-pip-upgrade" do
     action :run
-    command "#{py['pip_bin']} install pip --upgrade --index-url=https://pypi.python.org/simple"
+    command "#{node['pip'][new_resource.version.to_s]['bin']} install pip --upgrade --index-url=https://pypi.python.org/simple"
     only_if { py['pip_upgrade'] }
     ignore_failure true
   end
 
   execute "spython[#{version}]-setuptools-upgrade" do
     action :run
-    command "#{py['pip_bin']} install setuptools --upgrade"
+    command "#{node['pip'][new_resource.version.to_s]['bin']} install setuptools --upgrade"
     only_if { py['setuptools_upgrade'] }
     ignore_failure true
   end

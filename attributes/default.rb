@@ -16,7 +16,6 @@
 #
 
 default['spython']['2']['pip_packages'] = {}
-default['spython']['2']['pip_bin'] = 'pip2'
 default['spython']['2']['pip_upgrade'] = false
 default['spython']['2']['setuptools_upgrade'] = false
 default['spython']['2']['packages'] = value_for_platform(
@@ -31,7 +30,6 @@ default['spython']['2']['packages'] = value_for_platform(
 )
 
 default['spython']['3']['pip_packages'] = {}
-default['spython']['3']['pip_bin'] = 'pip3'
 default['spython']['3']['pip_upgrade'] = false
 default['spython']['3']['setuptools_upgrade'] = false
 default['spython']['3']['packages'] = value_for_platform(

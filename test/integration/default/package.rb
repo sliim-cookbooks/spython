@@ -22,7 +22,7 @@ input('packages').each do |package, version|
       its(:stdout) { should match /^#{package}==#{version}$/ }
     end
   else
-    describe command "#{input('pip_bin')} freeze|grep '^#{package}'" do
+    describe command "#{input('pip_bin')} freeze|grep '^#{package}=='" do
       its(:exit_status) { should eq 0 }
       its(:stdout) { should match /^#{package}==/ }
     end

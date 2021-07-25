@@ -22,7 +22,6 @@ Attributes
 | ---------------------------------- | ------ | ---------------------------------------------------------------- |
 | `[spython][2][packages]`           | Array  | System packages to install python 2 (default: platform specific) |
 | `[spython][2][pip_packages]`       | Hash   | Pip packages to install (default: `{}`)                          |
-| `[spython][2][pip_bin]`            | String | Path to pip executable (default: `pip2`)                         |
 | `[spython][2][pip_upgrade]`        | Bool   | Upgrade pip after python install (default: `false`)              |
 | `[spython][2][setuptools_upgrade]` | Bool   | Upgrade setuptools after python install (default: `false`        |
 
@@ -31,7 +30,6 @@ Attributes
 | ---------------------------------- | ------ | ---------------------------------------------------------------- |
 | `[spython][3][packages]`           | Array  | System packages to install python 3 (default: platform specific) |
 | `[spython][3][pip_packages]`       | Hash   | Pip packages to install (default: `{}`)                          |
-| `[spython][3][pip_bin]`            | String | Path to pip executable (default: `pip3`)                         |
 | `[spython][3][pip_upgrade]`        | Bool   | Upgrade pip after python install (default: `false`)              |
 | `[spython][3][setuptools_upgrade]` | Bool   | Upgrade setuptools after python install (default: `false`        |
 
