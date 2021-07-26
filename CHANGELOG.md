@@ -2,6 +2,9 @@
 
 This file is used to list changes made in each version of the spython cookbook.
 
+## 0.3.1
+- Fix broken release 0.3.0 (missing ohai plugin file)
+
 ## 0.3.0
 - Add spython ohai plugin to collect pip data
 - Add new resources:
