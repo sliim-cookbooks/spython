@@ -15,6 +15,7 @@
 #
 
 # TODO: spython_pip resource
+unified_mode true
 resource_name :spython_pip
 provides :spython_pip
 default_action :run

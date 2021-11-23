@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+unified_mode true
 resource_name :spython_package
 provides :spython_package
 default_action :install

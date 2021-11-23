@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+unified_mode true
 resource_name :spython_venv
 provides :spython_venv
 default_action :create

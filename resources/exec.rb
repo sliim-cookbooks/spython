@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+unified_mode true
 resource_name :spython_exec
 provides :spython_exec
 default_action :run

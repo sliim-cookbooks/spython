@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+unified_mode true
 resource_name :spython_runtime
 provides :spython_runtime
 default_action :install
