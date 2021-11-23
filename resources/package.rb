@@ -23,8 +23,6 @@ property :runtime, String, default: '3'
 property :version, String, default: ''
 
 action :install do
-  py = spython_attributes(new_resource.runtime)
-
   install_cmd = "#{node['pip'][new_resource.runtime.to_s]['bin']} install #{new_resource.name}"
   unless new_resource.version.empty?
     install_cmd << "==#{new_resource.version}"
@@ -36,8 +34,6 @@ action :install do
 end
 
 action :upgrade do
-  py = spython_attributes(new_resource.runtime)
-
   install_cmd = "#{node['pip'][new_resource.runtime.to_s]['bin']} install --upgrade #{new_resource.name}"
   unless new_resource.version.empty?
     install_cmd << "==#{new_resource.version}"
@@ -49,8 +45,6 @@ action :upgrade do
 end
 
 action :remove do
-  py = spython_attributes(new_resource.runtime)
-
   execute "#{node['pip'][new_resource.runtime.to_s]['bin']} uninstall #{new_resource.name}" do
     only_if { node['pip'][new_resource.runtime.to_s]['packages'].key?(new_resource.name) }
   end

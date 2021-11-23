@@ -15,7 +15,6 @@
 #
 
 Ohai.plugin(:Spython) do
-
   provides 'pip'
 
   collect_data :default do
@@ -24,19 +23,19 @@ Ohai.plugin(:Spython) do
     [2, 3].each do |runtime|
       which = shell_out("which pip#{runtime}")
 
-      if which.exitstatus == 0
-        bin = which.stdout.strip
+      next unless which.exitstatus == 0
 
-        pip[runtime.to_s] = Mash.new
-        pip[runtime.to_s][:bin] = bin
-        pip[runtime.to_s][:packages] = Mash.new
+      bin = which.stdout.strip
 
-        shell_out("#{bin} freeze 2>/dev/null").stdout.each_line do |pkg|
-          package = pkg.strip.split('==')[0]
-          version = pkg.strip.split('==')[1]
-          pip[runtime.to_s][:packages][package] = Mash.new
-          pip[runtime.to_s][:packages][package][:version] = version
-        end
+      pip[runtime.to_s] = Mash.new
+      pip[runtime.to_s][:bin] = bin
+      pip[runtime.to_s][:packages] = Mash.new
+
+      shell_out("#{bin} freeze 2>/dev/null").stdout.each_line do |pkg|
+        package = pkg.strip.split('==')[0]
+        version = pkg.strip.split('==')[1]
+        pip[runtime.to_s][:packages][package] = Mash.new
+        pip[runtime.to_s][:packages][package][:version] = version
       end
     end
   end

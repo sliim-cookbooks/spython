@@ -1,4 +1,3 @@
-# coding: utf-8
 # Cookbook:: spython
 # Attributes:: default
 #

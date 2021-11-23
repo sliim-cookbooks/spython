@@ -32,11 +32,11 @@ property :group, String, default: 'root'
 property :venv, String, default: ''
 
 action :run do
-  if new_resource.venv.empty?
-    cmd = "pip#{new_resource.runtime}"
-  else
-    cmd = spython_venv_command(new_resource.venv, new_resource, 'pip')
-  end
+  cmd = if new_resource.venv.empty?
+          "pip#{new_resource.runtime}"
+        else
+          spython_venv_command(new_resource.venv, new_resource, 'pip')
+        end
 
   execute "#{cmd} #{new_resource.command}" do
     cwd new_resource.cwd unless new_resource.cwd.empty?
