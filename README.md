@@ -18,21 +18,20 @@ The following platforms and versions are tested and supported using Opscode's te
 Attributes
 ----------
 #### spython::2
-| Key                                | Type   | Description                                                      |
-| ---------------------------------- | ------ | ---------------------------------------------------------------- |
-| `[spython][2][packages]`           | Array  | System packages to install python 2 (default: platform specific) |
-| `[spython][2][pip_packages]`       | Hash   | Pip packages to install (default: `{}`)                          |
-| `[spython][2][pip_upgrade]`        | Bool   | Upgrade pip after python install (default: `false`)              |
-| `[spython][2][setuptools_upgrade]` | Bool   | Upgrade setuptools after python install (default: `false`        |
+| Key                                | Type        | Description                                                                                            |
+| ---------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------ |
+| `[spython][2][packages]`           | Array       | System packages to install python 2 (default: platform specific).                                      |
+| `[spython][2][pip_packages]`       | Hash        | Pip packages to install (default: `{}`).                                                               |
+| `[spython][2][pip_upgrade]`        | Bool/String | Upgrade pip after python install (default: `false`). Pass a string to install specific version.        |
+| `[spython][2][setuptools_upgrade]` | Bool/String | Upgrade setuptools after python install (default: `false`). Pass a string to install specific version. |
 
 #### spython::3
-| Key                                | Type   | Description                                                      |
-| ---------------------------------- | ------ | ---------------------------------------------------------------- |
-| `[spython][3][packages]`           | Array  | System packages to install python 3 (default: platform specific) |
-| `[spython][3][pip_packages]`       | Hash   | Pip packages to install (default: `{}`)                          |
-| `[spython][3][pip_upgrade]`        | Bool   | Upgrade pip after python install (default: `false`)              |
-| `[spython][3][setuptools_upgrade]` | Bool   | Upgrade setuptools after python install (default: `false`        |
-
+| Key                                | Type        | Description                                                                                            |
+| ---------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------ |
+| `[spython][3][packages]`           | Array       | System packages to install python 3 (default: platform specific).                                      |
+| `[spython][3][pip_packages]`       | Hash        | Pip packages to install (default: `{}`).                                                               |
+| `[spython][3][pip_upgrade]`        | Bool/String | Upgrade pip after python install (default: `false`). Pass a string to install specific version.        |
+| `[spython][3][setuptools_upgrade]` | Bool/String | Upgrade setuptools after python install (default: `false`). Pass a string to install specific version. |
 
 Usage
 -----

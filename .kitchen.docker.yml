@@ -40,6 +40,11 @@ platforms:
   - name: centos-7
     run_list:
       - recipe[yum-epel]
+    attributes:
+      spython:
+        "2":
+          pip_upgrade: "==20.3"
+          setuptools_upgrade: true
 
 suites:
   - name: python2

@@ -38,17 +38,13 @@ action :install do
 
   pip = spython_pip_data(version)
 
-  execute "spython[#{version}]-pip-upgrade" do
-    action :run
-    command "#{pip['bin']} install pip --upgrade --index-url=https://pypi.python.org/simple"
-    only_if { py['pip_upgrade'] }
-    ignore_failure true
-  end
-
-  execute "spython[#{version}]-setuptools-upgrade" do
-    action :run
-    command "#{pip['bin']} install setuptools --upgrade"
-    only_if { py['setuptools_upgrade'] }
-    ignore_failure true
+  %w(pip setuptools).each do |package|
+    upgrade = py["#{package}_upgrade"]
+    execute "spython[#{version}]-#{package}-upgrade" do
+      action :run
+      command "#{pip['bin']} install -U #{package}#{upgrade.is_a?(String) ? upgrade : ''} --index-url=https://pypi.python.org/simple"
+      only_if { upgrade }
+      ignore_failure true
+    end
   end
 end
