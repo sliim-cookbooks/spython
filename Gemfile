@@ -6,7 +6,6 @@ gem 'rake'
 
 group :development do
   gem 'guard'
-  gem 'guard-foodcritic'
   gem 'guard-rubocop'
 end
 
@@ -18,6 +17,5 @@ group :kitchen do
 end
 
 group :lint do
-  gem 'foodcritic'
   gem 'cookstyle'
 end

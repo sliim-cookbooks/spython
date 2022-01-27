@@ -24,12 +24,7 @@ namespace :test do
   desc 'Tests suites runner'
 
   task :checkstyle do
-    Rake::Task['test:foodcritic'].invoke
     Rake::Task['test:cookstyle'].invoke
-  end
-
-  task :foodcritic do
-    bundle_exec 'foodcritic -f any .'
   end
 
   task :cookstyle do
