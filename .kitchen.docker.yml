@@ -29,11 +29,6 @@ platforms:
     run_list:
       - recipe[apt]
       - recipe[locales]
-    attributes:
-      spython:
-        "2":
-          pip_upgrade: true
-          setuptools_upgrade: true
   - name: ubuntu-18.04
     run_list:
       - recipe[apt]
