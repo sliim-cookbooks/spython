@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'chef', "~> #{ENV['CHEF_VERSION'] || 14}"
 gem 'berkshelf'
-gem 'chef'
 gem 'rake'
 
 group :development do

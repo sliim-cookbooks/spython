@@ -7,6 +7,10 @@ driver:
 provisioner:
   name: chef_zero
   chef_license: accept
+  product_name: chef
+  product_version: <%= ENV['KITCHEN_CHEF_VERSION'] || ENV['CHEF_VERSION'] || 'latest' %>
+  client_rb:
+    ohai.directory: /tmp/kitchen/ohai/cookbook_plugins
 
 verifier:
   name: inspec
@@ -27,7 +31,7 @@ platforms:
       - recipe[locales]
     attributes:
       spython:
-        "3":
+        "2":
           pip_upgrade: true
           setuptools_upgrade: true
   - name: ubuntu-18.04
@@ -48,7 +52,7 @@ suites:
       spython:
         "2":
           pip_packages:
-            paramiko: null
+            click: null
             PyYAML: 3.13
     verifier:
       inspec_tests:
@@ -57,7 +61,7 @@ suites:
         runtime: "2"
         pip_bin: pip2
         packages:
-          paramiko: null
+          click: null
           PyYAML: 3.13
   - name: python3
     run_list:
@@ -66,7 +70,7 @@ suites:
       spython:
         "3":
           pip_packages:
-            paramiko: null
+            click: null
             PyYAML: 3.13
     verifier:
       inspec_tests:
@@ -75,5 +79,5 @@ suites:
         runtime: "3"
         pip_bin: pip3
         packages:
-          paramiko: null
+          click: null
           PyYAML: 3.13

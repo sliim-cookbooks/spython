@@ -5,23 +5,28 @@ driver:
 provisioner:
   name: chef_zero
   chef_license: accept
+  product_name: chef
+  product_version: <%= ENV['KITCHEN_CHEF_VERSION'] || ENV['CHEF_VERSION'] || 'latest' %>
+  client_rb:
+    ohai.directory: /tmp/kitchen/ohai/cookbook_plugins
 
 verifier:
   name: inspec
 
 platforms:
 - name: debian-9.5
+  run_list:
+    - recipe[apt]
 
 suites:
   - name: python2
     run_list:
-      - recipe[apt]
       - recipe[spython::2]
     attributes:
       spython:
         "2":
           pip_packages:
-            paramiko: null
+            click: null
             PyYAML: 3.13
     verifier:
       inspec_tests:
@@ -30,17 +35,16 @@ suites:
         runtime: "2"
         pip_bin: pip2
         packages:
-          paramiko: null
+          click: null
           PyYAML: 3.13
   - name: python3
     run_list:
-      - recipe[apt]
       - recipe[spython::3]
     attributes:
       spython:
         "3":
           pip_packages:
-            paramiko: null
+            click: null
             PyYAML: 3.13
     verifier:
       inspec_tests:
@@ -49,5 +53,5 @@ suites:
         runtime: "3"
         pip_bin: pip3
         packages:
-          paramiko: null
+          click: null
           PyYAML: 3.13
