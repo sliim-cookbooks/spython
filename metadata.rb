@@ -3,7 +3,7 @@ maintainer 'Sliim'
 maintainer_email 'sliim@mailoo.org'
 license 'Apache-2.0'
 description 'Spython cookbook - Sliim\'s python cookbook.'
-chef_version '>= 12'
+chef_version '>= 14.14'
 version '0.3.1'
 
 supports 'debian', '>= 9.0'
