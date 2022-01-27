@@ -33,7 +33,7 @@ property :venv, String, default: ''
 
 action :run do
   cmd = if new_resource.venv.empty?
-          "pip#{new_resource.runtime}"
+          spython_pip_data(new_resource.runtime)['bin']
         else
           spython_venv_command(new_resource.venv, new_resource, 'pip')
         end

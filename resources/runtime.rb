@@ -25,20 +25,29 @@ action :install do
   version = new_resource.version
   py = spython_attributes(version)
 
-  py['packages'].each do |pkg|
-    package pkg
+  ohai 'spython-pip' do
+    action :nothing
+    plugin 'pip'
   end
+
+  py['packages'].each do |pkg|
+    package pkg do
+      notifies :reload, 'ohai[spython-pip]', :immediately
+    end
+  end
+
+  pip = spython_pip_data(version)
 
   execute "spython[#{version}]-pip-upgrade" do
     action :run
-    command "#{node['pip'][new_resource.version.to_s]['bin']} install pip --upgrade --index-url=https://pypi.python.org/simple"
+    command "#{pip['bin']} install pip --upgrade --index-url=https://pypi.python.org/simple"
     only_if { py['pip_upgrade'] }
     ignore_failure true
   end
 
   execute "spython[#{version}]-setuptools-upgrade" do
     action :run
-    command "#{node['pip'][new_resource.version.to_s]['bin']} install setuptools --upgrade"
+    command "#{pip['bin']} install setuptools --upgrade"
     only_if { py['setuptools_upgrade'] }
     ignore_failure true
   end

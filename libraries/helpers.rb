@@ -34,3 +34,9 @@ def spython_venv_command(name, resource, bin = 'python')
   raise "The virtualenv #{venv.name} has been created with python #{venv.runtime}. The new resource use python #{resource.runtime}" unless venv.runtime == resource.runtime
   "source #{venv.path}/bin/activate && #{bin}"
 end
+
+def spython_pip_data(runtime)
+  pip = node['pip'][runtime.to_s]
+  raise "No pip binary found for python#{runtime}" unless pip && pip['bin']
+  pip
+end

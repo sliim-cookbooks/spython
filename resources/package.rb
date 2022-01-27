@@ -23,29 +23,35 @@ property :runtime, String, default: '3'
 property :version, String, default: ''
 
 action :install do
-  install_cmd = "#{node['pip'][new_resource.runtime.to_s]['bin']} install #{new_resource.name}"
+  pip = spython_pip_data(new_resource.runtime)
+
+  install_cmd = "#{pip['bin']} install #{new_resource.name}"
   unless new_resource.version.empty?
     install_cmd << "==#{new_resource.version}"
   end
 
   execute install_cmd do
-    not_if { (new_resource.version.empty? && node['pip'][new_resource.runtime.to_s]['packages'][new_resource.name]) || (!new_resource.version.empty? && node['pip'][new_resource.runtime.to_s]['packages'].key?(new_resource.name) && new_resource.version == node['pip'][new_resource.runtime.to_s]['packages'][new_resource.name]['version']) }
+    not_if { (new_resource.version.empty? && pip['packages'][new_resource.name]) || (!new_resource.version.empty? && pip['packages'].key?(new_resource.name) && new_resource.version == pip['packages'][new_resource.name]['version']) }
   end
 end
 
 action :upgrade do
-  install_cmd = "#{node['pip'][new_resource.runtime.to_s]['bin']} install --upgrade #{new_resource.name}"
+  pip = spython_pip_data(new_resource.runtime)
+
+  install_cmd = "#{pip['bin']} install --upgrade #{new_resource.name}"
   unless new_resource.version.empty?
     install_cmd << "==#{new_resource.version}"
   end
 
   execute install_cmd do
-    not_if { (!new_resource.version.empty? && node['pip'][new_resource.runtime.to_s]['packages'].key?(new_resource.name) && new_resource.version == node['pip'][new_resource.runtime.to_s]['packages'][new_resource.name]['version']) }
+    not_if { (!new_resource.version.empty? && pip['packages'].key?(new_resource.name) && new_resource.version == pip['packages'][new_resource.name]['version']) }
   end
 end
 
 action :remove do
-  execute "#{node['pip'][new_resource.runtime.to_s]['bin']} uninstall #{new_resource.name}" do
-    only_if { node['pip'][new_resource.runtime.to_s]['packages'].key?(new_resource.name) }
+  pip = spython_pip_data(new_resource.runtime)
+
+  execute "#{pip['bin']} uninstall #{new_resource.name}" do
+    only_if { pip['packages'].key?(new_resource.name) }
   end
 end
