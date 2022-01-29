@@ -38,14 +38,14 @@ platforms:
     attributes:
       spython:
         "2":
-          pip_upgrade: "==20.3"
+          pip_upgrade: "==20.3.4"
           setuptools_upgrade: true
         "3":
-          pip_upgrade: "==20.3"
+          pip_upgrade: "==20.3.4"
     verifier:
       inputs:
         packages:
-          pip: "20.3"
+          pip: "20.3.4"
 
 suites:
   - name: python2
