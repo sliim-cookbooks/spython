@@ -16,15 +16,9 @@
 #
 
 input('packages').each do |package, version|
-  if version
-    describe command "#{input('pip_bin')} freeze|grep '^#{package}==#{version}$'" do
-      its(:exit_status) { should eq 0 }
-      its(:stdout) { should match /^#{package}==#{version}$/ }
-    end
-  else
-    describe command "#{input('pip_bin')} freeze|grep '^#{package}=='" do
-      its(:exit_status) { should eq 0 }
-      its(:stdout) { should match /^#{package}==/ }
-    end
+  regex = version ? "^#{package}==#{version}$": "^#{package}=="
+  describe command "#{input('pip_bin')} freeze --all|grep '#{regex}'" do
+    its(:exit_status) { should eq 0 }
+    its(:stdout) { should match /#{regex}/ }
   end
 end

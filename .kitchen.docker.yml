@@ -40,6 +40,12 @@ platforms:
         "2":
           pip_upgrade: "==20.3"
           setuptools_upgrade: true
+        "3":
+          pip_upgrade: "==20.3"
+    verifier:
+      inputs:
+        packages:
+          pip: "20.3"
 
 suites:
   - name: python2
