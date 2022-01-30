@@ -55,3 +55,48 @@ suites:
         packages:
           click: null
           PyYAML: 3.13
+
+  - name: ifs-no-version
+    # Pip freeze when installing package from source in pip 20.3.4 can result to:
+    #   soundcloud-syncer @ file:///tmp/kitchen/test-install-from-src
+    run_list:
+      - recipe[spython::3]
+      - recipe[spython_test::install_from_source]
+    attributes:
+      spython:
+        "3":
+          pip_upgrade: "==20.3.4"
+      spython_test:
+        repo: https://github.com/Sliim/soundcloud-syncer
+        ref: 0.3.3
+        runtime: 3
+    verifier:
+      inspec_tests:
+        - path: test/integration/default
+      inputs:
+        runtime: "3"
+        pip_bin: pip3
+        packages:
+          soundcloud-syncer: null
+  - name: ifs-arbitrary-equality
+    # Pip freeze when installing package from source with a special version can result to
+    # an arbitrary equality:
+    #   soundcloud-syncer===13.37.0-42-8821b53
+    # See https://www.python.org/dev/peps/pep-0440/#arbitrary-equality
+    run_list:
+      - recipe[spython::3]
+      - recipe[spython_test::install_from_source]
+    attributes:
+      spython_test:
+        repo: https://github.com/Sliim/soundcloud-syncer
+        ref: 0.3.3
+        runtime: 3
+        update_version: 13.37.0-42-8821b53
+    verifier:
+      inspec_tests:
+        - path: test/integration/default
+      inputs:
+        runtime: "3"
+        pip_bin: pip3
+        packages:
+          soundcloud-syncer: 13.37.0-42-8821b53

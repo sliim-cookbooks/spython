@@ -30,8 +30,9 @@ Ohai.plugin(:Spython) do
       pip[runtime][:packages] = Mash.new
 
       shell_out("#{bin} freeze --all 2>/dev/null").stdout.each_line do |pkg|
-        package = pkg.strip.split('==')[0]
-        version = pkg.strip.split('==')[1]
+        regex = /^([^= ]*)[=\ ]+(.*)$/
+        package = pkg.strip[regex, 1]
+        version = pkg.strip[regex, 2]
         pip[runtime][:packages][package] = Mash.new
         pip[runtime][:packages][package][:version] = version
       end

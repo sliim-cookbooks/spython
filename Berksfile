@@ -7,4 +7,5 @@ group :integration do
   cookbook 'locales',
            git: 'https://github.com/sliim-cookbooks/locales',
            ref: 'create-directory'
+  cookbook 'spython_test', path: 'test/cookbooks/spython_test'
 end

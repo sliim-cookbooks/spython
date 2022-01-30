@@ -16,7 +16,7 @@
 #
 
 input('packages').each do |package, version|
-  regex = version ? "^#{package}==#{version}$" : "^#{package}=="
+  regex = version ? "^#{package}=+#{version}$" : "^#{package}[= ]+"
   describe command "#{input('pip_bin')} freeze --all" do
     its(:exit_status) { should eq 0 }
     its(:stdout) { should match /#{regex}/ }
