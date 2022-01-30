@@ -43,7 +43,7 @@ action :install do
     execute "spython[#{version}]-#{package}-upgrade" do
       action :run
       command "#{pip['bin']} install -U #{package}#{upgrade.is_a?(String) ? upgrade : ''} --index-url=https://pypi.python.org/simple"
-      only_if { upgrade }
+      only_if { upgrade.is_a?(String) || upgrade }
       ignore_failure true
     end
   end
