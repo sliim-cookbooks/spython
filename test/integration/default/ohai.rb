@@ -15,16 +15,49 @@
 # limitations under the License.
 #
 
-ohai = JSON.parse(inspec.backend.run_command('ohai --directory /tmp/kitchen/ohai/cookbook_plugins/ pip').stdout)
-packages = ohai[input('runtime')]['packages']
+def ohai(attribute)
+  ohai_cmd = "ohai --directory /tmp/kitchen/ohai/cookbook_plugins #{attribute}"
+  result = inspec.backend.run_command(ohai_cmd)
+
+  if result.exit_status != 0
+    Chef::Log.warn("Ohai command `#{ohai_cmd}` failed with exitstatus #{result.exit_status}")
+    return {}
+  end
+
+  JSON.parse(result.stdout)
+end
+
+runtime = input('runtime')
+ohai_pip = ohai('pip')
+pip_packages = ohai_pip[runtime]['packages']
 
 input('packages').each do |package, version|
   describe package do
-    it { should be_in packages.keys }
+    it { should be_in pip_packages.keys }
   end
 
   next unless version
-  describe packages do
+  describe pip_packages do
     it { should include package => { 'version' => version.to_s } }
+  end
+end
+
+ohai_py = ohai("languages/python#{runtime}")
+
+describe ohai_py.keys do
+  it { should include 'bin' }
+  it { should include 'version' }
+  it { should include 'builddate' }
+end
+
+if ohai_py.key?('bin')
+  describe ohai_py['bin'].split('/').last do
+    it { should eq "python#{runtime}" }
+  end
+end
+
+if ohai_py.key?('version')
+  describe ohai_py['version'] do
+    it { should start_with runtime }
   end
 end

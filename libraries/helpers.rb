@@ -40,3 +40,9 @@ def spython_pip_data(runtime)
   raise "No pip binary found for python#{runtime}" unless pip && pip['bin']
   pip
 end
+
+def spython_runtime_data(runtime)
+  python = node['languages']["python#{runtime}"]
+  raise "No python data found for python#{runtime}" unless python && python['bin']
+  python
+end

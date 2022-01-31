@@ -32,7 +32,7 @@ property :venv, String, default: ''
 
 action :run do
   cmd = if new_resource.venv.empty?
-          "python#{new_resource.runtime}"
+          spython_runtime_data(new_resource.runtime)[:bin]
         else
           spython_venv_command(new_resource.venv, new_resource, 'python')
         end
