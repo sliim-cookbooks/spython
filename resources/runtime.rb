@@ -38,7 +38,7 @@ action :install do
     spython_package package do
       action :upgrade
       runtime new_resource.version
-      version if upgrade.is_a?(String)
+      version upgrade if upgrade.is_a?(String)
       ignore_failure true
       only_if { upgrade.is_a?(String) || upgrade }
     end

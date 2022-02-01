@@ -24,39 +24,37 @@ property :version, String, default: ''
 property :venv, String, default: ''
 
 action :install do
-  pip = spython_pip_data(new_resource.runtime)
-  install_cmd = "install #{new_resource.name}"
-  unless new_resource.version.empty?
-    install_cmd << "==#{new_resource.version}"
-  end
+  pip = spython_pip_data(new_resource.runtime)['packages']
+  name = new_resource.name
+  version = new_resource.version
+  fullversion = !version.empty? && version.match(/^[0-9]/) ? "==#{version}" : version
 
-  spython_pip install_cmd do
+  spython_pip "install #{name}#{fullversion}" do
     runtime new_resource.runtime
     venv new_resource.venv
     # FIXME: support when venv not empty
-    not_if { (new_resource.version.empty? && pip['packages'][new_resource.name]) || (!new_resource.version.empty? && pip['packages'].key?(new_resource.name) && new_resource.version == pip['packages'][new_resource.name]['version']) }
+    not_if { (version.empty? && pip.key?(name)) || (!version.empty? && pip.key?(name) && version == pip[name]['version']) }
   end
 end
 
 action :upgrade do
-  pip = spython_pip_data(new_resource.runtime)
-  install_cmd = "install --upgrade #{new_resource.name}"
-  unless new_resource.version.empty?
-    install_cmd << "==#{new_resource.version}"
-  end
+  pip = spython_pip_data(new_resource.runtime)['packages']
+  name = new_resource.name
+  version = new_resource.version
+  fullversion = !version.empty? && version.match(/^[0-9]/) ? "==#{version}" : version
 
-  spython_pip install_cmd do
+  spython_pip "install --upgrade #{name}#{fullversion}" do
     runtime new_resource.runtime
     venv new_resource.venv
-    not_if { (!new_resource.version.empty? && pip['packages'].key?(new_resource.name) && new_resource.version == pip['packages'][new_resource.name]['version']) }
+    not_if { (!version.empty? && pip.key?(name) && version == pip[name]['version']) }
   end
 end
 
 action :remove do
-  pip = spython_pip_data(new_resource.runtime)
+  pip = spython_pip_data(new_resource.runtime)['packages']
   spython_pip "uninstall #{new_resource.name}" do
     runtime new_resource.runtime
     venv new_resource.venv
-    only_if { pip['packages'].key?(new_resource.name) }
+    only_if { pip.key?(new_resource.name) }
   end
 end
