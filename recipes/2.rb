@@ -14,4 +14,5 @@
 # limitations under the License.
 #
 
-spython_install('2')
+include_recipe 'spython'
+spython_install '2'

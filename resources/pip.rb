@@ -41,5 +41,6 @@ action :run do
     user new_resource.user
     group new_resource.group
     venv new_resource.venv
+    notifies :reload, 'ohai[plugin-pip]', :immediately
   end
 end

@@ -13,3 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+node['spython'].keys.map { |r| "languages/python#{r}" }.push('pip').each do |plugin|
+  ohai "plugin-#{plugin}" do
+    action :nothing
+    plugin plugin
+  end
+end

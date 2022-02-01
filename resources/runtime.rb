@@ -24,18 +24,10 @@ property :version, String, name_property: true
 action :install do
   version = new_resource.version
   py = spython_attributes(version)
-  ohai_plugins = ['pip', "languages/python#{new_resource.version}"]
-
-  ohai_plugins.each do |plugin|
-    ohai "plugin-#{plugin}" do
-      action :nothing
-      plugin plugin
-    end
-  end
 
   py['packages'].each do |pkg|
     package pkg do
-      ohai_plugins.each do |plugin|
+      ['pip', "languages/python#{new_resource.version}"].each do |plugin|
         notifies :reload, "ohai[plugin-#{plugin}]", :immediately
       end
     end
