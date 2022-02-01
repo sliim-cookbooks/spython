@@ -27,7 +27,7 @@ def ohai(attribute)
   JSON.parse(result.stdout)
 end
 
-runtime = input('runtime')
+runtime = input('runtime').to_s
 ohai_pip = ohai('pip')
 pip_packages = ohai_pip[runtime]['packages']
 

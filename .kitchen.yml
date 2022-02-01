@@ -32,7 +32,7 @@ suites:
       inspec_tests:
         - path: test/integration/default
       inputs:
-        runtime: "2"
+        runtime: 2
         pip_bin: pip2
         packages:
           click: null
@@ -50,7 +50,7 @@ suites:
       inspec_tests:
         - path: test/integration/default
       inputs:
-        runtime: "3"
+        runtime: 3
         pip_bin: pip3
         packages:
           click: null
@@ -65,7 +65,7 @@ suites:
     attributes:
       spython:
         "3":
-          pip_upgrade: "==20.3.4"
+          pip_upgrade: ==20.3.4
       spython_test:
         repo: https://github.com/Sliim/soundcloud-syncer
         ref: 0.3.3
@@ -74,7 +74,7 @@ suites:
       inspec_tests:
         - path: test/integration/default
       inputs:
-        runtime: "3"
+        runtime: 3
         pip_bin: pip3
         packages:
           soundcloud-syncer: null
@@ -96,7 +96,7 @@ suites:
       inspec_tests:
         - path: test/integration/default
       inputs:
-        runtime: "3"
+        runtime: 3
         pip_bin: pip3
         packages:
           soundcloud-syncer: 13.37.0-42-8821b53

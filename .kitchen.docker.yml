@@ -11,7 +11,6 @@ provisioner:
   product_version: <%= ENV['KITCHEN_CHEF_VERSION'] || ENV['CHEF_VERSION'] || 'latest' %>
   client_rb:
     ohai.directory: /tmp/kitchen/ohai/cookbook_plugins
-  # log_level: debug
 
 verifier:
   name: inspec
@@ -39,14 +38,14 @@ platforms:
     attributes:
       spython:
         "2":
-          pip_upgrade: "==20.3.4"
+          pip_upgrade: ==20.3.4
           setuptools_upgrade: true
         "3":
-          pip_upgrade: "==20.3.4"
+          pip_upgrade: ==20.3.4
     verifier:
       inputs:
         packages:
-          pip: "20.3.4"
+          pip: 20.3.4
 
 suites:
   - name: python2
@@ -65,7 +64,7 @@ suites:
       inspec_tests:
         - path: test/integration/default
       inputs:
-        runtime: "2"
+        runtime: 2
         pip_bin: pip2
         packages:
           click: null
@@ -83,7 +82,7 @@ suites:
       inspec_tests:
         - path: test/integration/default
       inputs:
-        runtime: "3"
+        runtime: 3
         pip_bin: pip3
         packages:
           click: null
@@ -98,7 +97,7 @@ suites:
     attributes:
       spython:
         "3":
-          pip_upgrade: "==20.3.4"
+          pip_upgrade: ==20.3.4
       spython_test:
         repo: https://github.com/Sliim/soundcloud-syncer
         ref: 0.3.3
@@ -107,7 +106,7 @@ suites:
       inspec_tests:
         - path: test/integration/default
       inputs:
-        runtime: "3"
+        runtime: 3
         pip_bin: pip3
         packages:
           soundcloud-syncer: null
@@ -135,7 +134,7 @@ suites:
       inspec_tests:
         - path: test/integration/default
       inputs:
-        runtime: "3"
+        runtime: 3
         pip_bin: pip3
         packages:
           soundcloud-syncer: 13.37.0-42-8821b53
