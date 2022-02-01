@@ -14,29 +14,23 @@
 # limitations under the License.
 #
 
-def spython_attributes(version)
-  raise "Python version #{version} not supported! Supported versions: #{node['spython'].keys}" unless node['spython'].key?(version)
-  node['spython'][version]
+def spython_attributes(runtime)
+  raise "Python runtime #{runtime} not supported! Supported runtime: #{node['spython'].keys}" unless node['spython'].key?(runtime)
+  node['spython'][runtime]
 end
 
-def spython_install(python)
-  spython_runtime python.to_s
-  node['spython'][python.to_s]['pip_packages'].each do |pkg, ver|
+def spython_install(runtime)
+  spython_runtime runtime
+  node['spython'][runtime]['pip_packages'].each do |pkg, ver|
     spython_package pkg do
-      runtime python.to_s
+      runtime runtime
       version ver.to_s
     end
   end
 end
 
-def spython_venv_command(name, resource, bin = 'python')
-  venv = find_resource!(:spython_venv, name)
-  raise "The virtualenv #{venv.name} has been created with python #{venv.runtime}. The new resource use python #{resource.runtime}" unless venv.runtime == resource.runtime
-  "source #{venv.path}/bin/activate && #{bin}"
-end
-
 def spython_pip_data(runtime)
-  pip = node['pip'][runtime.to_s]
+  pip = node['pip'][runtime]
   raise "No pip binary found for python#{runtime}" unless pip && pip['bin']
   pip
 end

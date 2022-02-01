@@ -24,34 +24,34 @@ property :version, String, default: ''
 
 action :install do
   pip = spython_pip_data(new_resource.runtime)
-
-  install_cmd = "#{pip['bin']} install #{new_resource.name}"
+  install_cmd = "install #{new_resource.name}"
   unless new_resource.version.empty?
     install_cmd << "==#{new_resource.version}"
   end
 
-  execute install_cmd do
+  spython_pip install_cmd do
+    runtime new_resource.runtime
     not_if { (new_resource.version.empty? && pip['packages'][new_resource.name]) || (!new_resource.version.empty? && pip['packages'].key?(new_resource.name) && new_resource.version == pip['packages'][new_resource.name]['version']) }
   end
 end
 
 action :upgrade do
   pip = spython_pip_data(new_resource.runtime)
-
-  install_cmd = "#{pip['bin']} install --upgrade #{new_resource.name}"
+  install_cmd = "install --upgrade #{new_resource.name}"
   unless new_resource.version.empty?
     install_cmd << "==#{new_resource.version}"
   end
 
-  execute install_cmd do
+  spython_pip install_cmd do
+    runtime new_resource.runtime
     not_if { (!new_resource.version.empty? && pip['packages'].key?(new_resource.name) && new_resource.version == pip['packages'][new_resource.name]['version']) }
   end
 end
 
 action :remove do
   pip = spython_pip_data(new_resource.runtime)
-
-  execute "#{pip['bin']} uninstall #{new_resource.name}" do
+  spython_pip "uninstall #{new_resource.name}" do
+    runtime new_resource.runtime
     only_if { pip['packages'].key?(new_resource.name) }
   end
 end

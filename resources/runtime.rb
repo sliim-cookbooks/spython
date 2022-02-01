@@ -24,27 +24,31 @@ property :version, String, name_property: true
 action :install do
   version = new_resource.version
   py = spython_attributes(version)
+  ohai_plugins = ['pip', "languages/python#{new_resource.version}"]
 
-  ohai 'spython-pip' do
-    action :nothing
-    plugin 'pip'
+  ohai_plugins.each do |plugin|
+    ohai "plugin-#{plugin}" do
+      action :nothing
+      plugin plugin
+    end
   end
 
   py['packages'].each do |pkg|
     package pkg do
-      notifies :reload, 'ohai[spython-pip]', :immediately
+      ohai_plugins.each do |plugin|
+        notifies :reload, "ohai[plugin-#{plugin}]", :immediately
+      end
     end
   end
 
-  pip = spython_pip_data(version)
-
   %w(pip setuptools).each do |package|
     upgrade = py["#{package}_upgrade"]
-    execute "spython[#{version}]-#{package}-upgrade" do
-      action :run
-      command "#{pip['bin']} install -U #{package}#{upgrade.is_a?(String) ? upgrade : ''} --index-url=https://pypi.python.org/simple"
-      only_if { upgrade.is_a?(String) || upgrade }
+    spython_package package do
+      action :upgrade
+      runtime new_resource.version
+      version if upgrade.is_a?(String)
       ignore_failure true
+      only_if { upgrade.is_a?(String) || upgrade }
     end
   end
 end

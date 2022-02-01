@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 
-# TODO: spython_pip resource
 unified_mode true
 resource_name :spython_pip
 provides :spython_pip
@@ -32,19 +31,15 @@ property :group, String, default: 'root'
 property :venv, String, default: ''
 
 action :run do
-  cmd = if new_resource.venv.empty?
-          spython_pip_data(new_resource.runtime)['bin']
-        else
-          spython_venv_command(new_resource.venv, new_resource, 'pip')
-        end
-
-  execute "#{cmd} #{new_resource.command}" do
-    cwd new_resource.cwd unless new_resource.cwd.empty?
-    environment new_resource.env
+  spython_exec "-m pip #{new_resource.command}" do
+    runtime new_resource.runtime
+    cwd new_resource.cwd
+    env new_resource.env
     live_stream new_resource.live_stream
     returns new_resource.returns
     timeout new_resource.timeout
     user new_resource.user
     group new_resource.group
+    venv new_resource.venv
   end
 end
