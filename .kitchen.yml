@@ -22,12 +22,20 @@ suites:
   - name: python2
     run_list:
       - recipe[spython::2]
+      - recipe[spython_test::venv]
     attributes:
       spython:
         "2":
           pip_packages:
             click: null
             PyYAML: 3.13
+      spython_test:
+        venv: /tmp/test-venv
+        user: kitchen
+        group: kitchen
+        runtime: 2
+        venv_packages:
+          pyusb: 1.0.1
     verifier:
       inspec_tests:
         - path: test/integration/default
@@ -37,15 +45,28 @@ suites:
         packages:
           click: null
           PyYAML: 3.13
+        venv: /tmp/test-venv
+        user: kitchen
+        group: kitchen
+        venv_packages:
+          pyusb: 1.0.1
   - name: python3
     run_list:
       - recipe[spython::3]
+      - recipe[spython_test::venv]
     attributes:
       spython:
         "3":
           pip_packages:
             click: null
             PyYAML: 3.13
+      spython_test:
+        venv: /tmp/test-venv
+        user: kitchen
+        group: kitchen
+        runtime: 3
+        venv_packages:
+          pyusb: 1.0.1
     verifier:
       inspec_tests:
         - path: test/integration/default
@@ -55,6 +76,11 @@ suites:
         packages:
           click: null
           PyYAML: 3.13
+        venv: /tmp/test-venv
+        user: kitchen
+        group: kitchen
+        venv_packages:
+          pyusb: 1.0.1
 
   - name: ifs-no-version
     # Pip freeze when installing package from source in pip 20.3.4 can result to:
@@ -78,6 +104,7 @@ suites:
         pip_bin: pip3
         packages:
           soundcloud-syncer: null
+        venv: null
   - name: ifs-arbitrary-equality
     # Pip freeze when installing package from source with a special version can result to
     # an arbitrary equality:
@@ -100,3 +127,4 @@ suites:
         pip_bin: pip3
         packages:
           soundcloud-syncer: 13.37.0-42-8821b53
+        venv: null

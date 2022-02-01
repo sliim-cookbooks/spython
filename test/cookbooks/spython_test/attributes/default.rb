@@ -3,3 +3,7 @@ default['spython_test']['ref'] = '0.3.3'
 default['spython_test']['path'] = '/tmp/kitchen/test-install-from-src'
 default['spython_test']['runtime'] = 3
 default['spython_test']['update_version'] = nil
+default['spython_test']['venv'] = nil
+default['spython_test']['user'] = 'root'
+default['spython_test']['group'] = 'root'
+default['spython_test']['venv_packages'] = {}

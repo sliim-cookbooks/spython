@@ -21,6 +21,7 @@ default_action :install
 
 property :runtime, String, default: '3'
 property :version, String, default: ''
+property :venv, String, default: ''
 
 action :install do
   pip = spython_pip_data(new_resource.runtime)
@@ -31,6 +32,8 @@ action :install do
 
   spython_pip install_cmd do
     runtime new_resource.runtime
+    venv new_resource.venv
+    # FIXME: support when venv not empty
     not_if { (new_resource.version.empty? && pip['packages'][new_resource.name]) || (!new_resource.version.empty? && pip['packages'].key?(new_resource.name) && new_resource.version == pip['packages'][new_resource.name]['version']) }
   end
 end
@@ -44,6 +47,7 @@ action :upgrade do
 
   spython_pip install_cmd do
     runtime new_resource.runtime
+    venv new_resource.venv
     not_if { (!new_resource.version.empty? && pip['packages'].key?(new_resource.name) && new_resource.version == pip['packages'][new_resource.name]['version']) }
   end
 end
@@ -52,6 +56,7 @@ action :remove do
   pip = spython_pip_data(new_resource.runtime)
   spython_pip "uninstall #{new_resource.name}" do
     runtime new_resource.runtime
+    venv new_resource.venv
     only_if { pip['packages'].key?(new_resource.name) }
   end
 end

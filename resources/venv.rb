@@ -25,7 +25,7 @@ property :user, String, default: 'root'
 property :group, String, default: 'root'
 
 action :create do
-  spython_exec "-m virtualenv #{new_resource.path}" do
+  spython_exec "-m virtualenv --python=#{spython_runtime_data(new_resource.runtime)[:bin]} #{new_resource.path}" do
     runtime new_resource.runtime
     user new_resource.user
     group new_resource.group
