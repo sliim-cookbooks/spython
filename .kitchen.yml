@@ -22,6 +22,7 @@ suites:
   - name: python2
     run_list:
       - recipe[spython::2]
+      - recipe[spython_test::kitchen_user]
       - recipe[spython_test::venv]
     attributes:
       spython:
@@ -53,6 +54,7 @@ suites:
   - name: python3
     run_list:
       - recipe[spython::3]
+      - recipe[spython_test::kitchen_user]
       - recipe[spython_test::venv]
     attributes:
       spython:
