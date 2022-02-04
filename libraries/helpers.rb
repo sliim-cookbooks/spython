@@ -24,7 +24,7 @@ def spython_install(runtime)
   node['spython'][runtime]['pip_packages'].each do |pkg, ver|
     spython_package pkg do
       runtime runtime
-      version ver.to_s
+      version ver.to_s unless ver.nil?
     end
   end
 end
@@ -39,4 +39,17 @@ def spython_runtime_data(runtime)
   python = node['languages']["python#{runtime}"]
   raise "No python data found for python#{runtime}" unless python && python['bin']
   python
+end
+
+def spython_venv_cmd(runtime, virtualenv, command)
+  venv = find_resource!(:spython_venv, virtualenv)
+  raise ["The virtualenv #{venv.name} has been created with python#{venv.runtime}.",
+         "The current runtime is python#{runtime}",
+        ].join(' ') unless venv.runtime == runtime
+  ". #{venv.path}/bin/activate && #{command}"
+end
+
+def spython_venv_package_installed_cmd(runtime, virtualenv, package, version = '')
+  regex = "^#{package}[= ]+#{version.empty? ? '.*' : version}$"
+  spython_venv_cmd(runtime, virtualenv, "pip freeze --all | grep -E '#{regex}'")
 end

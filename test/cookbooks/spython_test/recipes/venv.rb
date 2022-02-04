@@ -7,9 +7,11 @@ spython_venv node['spython_test']['venv'] do
 end
 
 node['spython_test']['venv_packages'].each do |package, version|
-  spython_package package do
+  spython_package "venv-#{package}" do
+    action :install
+    name package
     runtime runtime
-    version version
+    version version.to_s unless version.nil?
     venv node['spython_test']['venv']
   end
 end

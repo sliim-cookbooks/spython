@@ -37,6 +37,7 @@ suites:
         runtime: 2
         venv_packages:
           pyusb: 1.0.1
+          PyYAML: 3.13
     verifier:
       inspec_tests:
         - path: test/integration/default
@@ -51,6 +52,7 @@ suites:
         group: kitchen
         venv_packages:
           pyusb: 1.0.1
+          PyYAML: 3.13
   - name: python3
     run_list:
       - recipe[spython::3]
@@ -69,6 +71,7 @@ suites:
         runtime: 3
         venv_packages:
           pyusb: 1.0.1
+          PyYAML: 3.13
     verifier:
       inspec_tests:
         - path: test/integration/default
@@ -83,6 +86,7 @@ suites:
         group: kitchen
         venv_packages:
           pyusb: 1.0.1
+          PyYAML: 3.13
 
   - name: ifs-no-version
     # Pip freeze when installing package from source in pip 20.3.4 can result to:

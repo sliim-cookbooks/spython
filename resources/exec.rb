@@ -34,11 +34,7 @@ action :run do
   cmd = if new_resource.venv.empty?
           spython_runtime_data(new_resource.runtime)[:bin]
         else
-          venv = find_resource!(:spython_venv, new_resource.venv)
-          raise ["The virtualenv #{venv.name} has been created with python#{venv.runtime}.",
-                 "The current resource use python#{new_resource.runtime}",
-                ].join(' ') unless venv.runtime == new_resource.runtime
-          ". #{venv.path}/bin/activate && python"
+          spython_venv_cmd(new_resource.runtime, new_resource.venv, 'python')
         end
 
   execute "#{cmd} #{new_resource.command}" do

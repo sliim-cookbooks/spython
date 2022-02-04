@@ -29,5 +29,6 @@ action :create do
     runtime new_resource.runtime
     user new_resource.user
     group new_resource.group
+    not_if "test -f #{new_resource.path}/bin/activate"
   end
 end

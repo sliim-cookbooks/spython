@@ -32,9 +32,11 @@ if venv
   input('venv_packages').each do |package, version|
     regex = version ? "^#{package}=+#{version}$" : "^#{package}[= ]+"
 
-    describe command "#{input('pip_bin')} freeze" do
-      its(:exit_status) { should eq 0 }
-      its(:stdout) { should_not match /#{regex}/ }
+    unless input('packages').keys.include?(package)
+      describe command "#{input('pip_bin')} freeze" do
+        its(:exit_status) { should eq 0 }
+        its(:stdout) { should_not match /#{regex}/ }
+      end
     end
 
     describe command "bash -c \". #{venv}/bin/activate && #{input('pip_bin')} freeze\"" do
