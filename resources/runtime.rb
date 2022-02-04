@@ -19,15 +19,15 @@ resource_name :spython_runtime
 provides :spython_runtime
 default_action :install
 
-property :version, String, name_property: true
+property :runtime, String, name_property: true
 
 action :install do
-  version = new_resource.version
-  py = spython_attributes(version)
+  runtime = new_resource.runtime
+  py = spython_attributes(runtime)
 
   py['packages'].each do |pkg|
     package pkg do
-      ['pip', "languages/python#{new_resource.version}"].each do |plugin|
+      ['pip', "languages/python#{runtime}"].each do |plugin|
         notifies :reload, "ohai[plugin-#{plugin}]", :immediately
       end
     end
@@ -35,9 +35,10 @@ action :install do
 
   %w(pip setuptools).each do |package|
     upgrade = py["#{package}_upgrade"]
-    spython_package package do
+    spython_package "pip#{runtime}-#{package}" do
       action :upgrade
-      runtime new_resource.version
+      runtime runtime
+      package package
       version upgrade unless !!upgrade == upgrade
       ignore_failure true
       not_if { !upgrade }

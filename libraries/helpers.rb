@@ -22,8 +22,9 @@ end
 def spython_install(runtime)
   spython_runtime runtime
   node['spython'][runtime]['pip_packages'].each do |pkg, ver|
-    spython_package pkg do
+    spython_package "pip#{runtime}-#{pkg}" do
       runtime runtime
+      package pkg
       version ver.to_s unless ver.nil?
     end
   end
